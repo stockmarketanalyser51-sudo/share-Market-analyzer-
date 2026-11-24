@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Share Market Analyzer — Professional Trading Desk</title>
+  <style>
+    :root {
+      --bg-deep: #050d14;
+      --bg-navy: #0b1926;
+      --bg-card: #102436;
+      --bg-card-hover: #153048;
+      --emerald: #16c784;
+      --emerald-dark: #0e9662;
+      --gold: #f5be41;
+      --cyan: #38bdf8;
+      --text-main: #f3f7fa;
+      --text-sub: #a9bfd1;
+      --border: rgba(255, 255, 255, 0.11);
+      --glow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top right, rgba(22, 199, 132, 0.14), transparent 36%),
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 34%),
+        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-navy) 52%, var(--bg-deep) 100%);
+      color: var(--text-main);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* Top Navigation Bar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(5, 13, 20, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-brand {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-brand strong {
+      font-size: 1.08rem;
+      letter-spacing: 0.4px;
+      color: var(--text-main);
+    }
+
+    .nav-brand span {
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 0.6px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 0.88rem;
+    }
+
+    .nav-links a {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--emerald);
+    }
+
+    .nav-cta {
+      background: var(--emerald);
+      color: #04140d !important;
+      padding: 7px 13px;
+      border-radius: 9px;
+      font-weight: 700 !important;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, rgba(22, 199, 132, 0.16), rgba(16, 36, 54, 0.95) 55%, rgba(245, 190, 65, 0.08));
+      border: 1px solid rgba(22, 199, 132, 0.3);
+      border-radius: 24px;
+      padding: 36px 24px;
+      box-shadow: var(--glow);
+      text-align: center;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .badge-gold {
+      background: rgba(245, 190, 65, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245, 190, 65, 0.4);
+    }
+
+    .badge-green {
+      background: rgba(22, 199, 132, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(22, 199, 132, 0.4);
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .hero-tagline {
+      color: var(--text-sub);
+      font-size: 0.98rem;
+      margin-bottom: 20px;
+    }
+
+    .market-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .market-tag {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 9px 15px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.94rem;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--emerald);
+      color: #04150d;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #1c1302;
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    /* Section Styling */
+    .section {
+      margin-top: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px 22px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .section-header {
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .section-desc {
+      font-size: 0.93rem;
+      color: var(--text-sub);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg-navy);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(22, 199, 132, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .label {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .big-num {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .highlight-green {
+      color: var(--emerald);
+    }
+
+    .highlight-gold {
+      color: var(--gold);
+    }
+
+    /* Package Cards */
+    .pkg-card {
+      background: linear-gradient(180deg, #153149 0%, #0b1b29 100%);
+      border: 1px solid rgba(22, 199, 132, 0.35);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .pkg-card.featured {
+      border: 1.5px solid var(--gold);
+      box-shadow: 0 0 0 1px rgba(245, 190, 65, 0.2);
+    }
+
+    .pkg-tier {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--emerald);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 4px;
+    }
+
+    .pkg-capital {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .pkg-price {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .pkg-sub {
+      font-size: 0.86rem;
+      color: var(--text-sub);
+    }
+
+    /* Feature & Info Lists */
+    .list-stack {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .list-stack li {
+      background: var(--bg-navy);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.94rem;
+    }
+
+    .list-stack strong {
+      color: var(--emerald);
+    }
+
+    /* Payment Box */
+    .payment-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .step-box {
+      background: var(--bg-navy);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .step-num {
+      display: inline-block;
+      background: rgba(22, 199, 132, 0.16);
+      color: var(--emerald);
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .pay-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+      align-items: center;
+    }
+
+    select {
+      background: var(--bg-navy);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      padding: 11px 14px;
+      border-radius: 11px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      min-width: 240px;
+    }
+
+    /* Compliance / Safety Banner */
+    .compliance-box {
+      background: rgba(245, 190, 65, 0.08);
+      border: 1px solid rgba(245, 190, 65, 0.35);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .compliance-box h3 {
+      color: var(--gold);
+      font-size: 1.08rem;
+      margin-bottom: 8px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .contact-card {
+      background: var(--bg-navy);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .contact-card a {
+      color: var(--emerald);
+      text-decoration: none;
+      font-weight: 700;
+      word-break: break-all;
+    }
+
+    .disclaimer {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      font-size: 0.83rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: var(--text-sub);
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Top Bar -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <strong>Share Market Analyzer</strong>
+        <span>PROFESSIONAL TRADING DESK</span>
+      </div>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#packages">Packages</a>
+        <a href="#payment">Payment</a>
+        <a href="#safety">Safety &amp; SEBI</a>
+        <a href="#support">Support</a>
+        <a href="https://wa.me/918356079521" target="_blank" rel="noopener noreferrer" class="nav-cta">
+          WhatsApp: +91 83560 79521
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="badge-row">
+        <span class="badge badge-gold">Daily Profit Program</span>
+        <span class="badge badge-green">Structured Market Analysis</span>
+      </div>
+
+      <h1>Share Market Analyzer</h1>
+      <p class="hero-tagline">WEALTH CREATION THROUGH EXPERTISE &bull; YOUR TRUSTED TRADING PARTNERS</p>
+
+      <div class="market-tags">
+        <span class="market-tag">NIFTY EXPERT</span>
+        <span class="market-tag">SENSEX EXPERT</span>
+        <span class="market-tag">F&amp;O EXPERT</span>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://wa.me/918356079521?text=Hello%20Share%20Market%20Analyzer%2C%20I%20want%20details%20about%20the%20Daily%20Profit%20Program." target="_blank" rel="noopener noreferrer">
+          Connect on WhatsApp (+91 83560 79521)
+        </a>
+        <a class="btn btn-gold" href="#packages">
+          View Packages &amp; Plans
+        </a>
+        <a class="btn btn-outline" href="#payment">
+          How to Pay
+        </a>
+      </div>
+    </header>
+
+    <!-- Capital & Program Overview -->
+    <section id="overview" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Share Market Analyzer &mdash; Program Overview</h2>
+        <p class="section-desc">Core parameters of the Daily Profit Program designed for disciplined traders.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="label">Minimum Capital Required</div>
+          <div class="big-num">&#8377;30,000</div>
+          <p class="pkg-sub">Starting trading capital requirement for core program eligibility.</p>
+        </div>
+
+        <div class="card">
+          <div class="label">Daily Return Potential</div>
+          <div class="big-num highlight-green">&#8377;18,000 - &#8377;20,000*</div>
+          <p class="pkg-sub">Illustrative potential target depending on market volatility &amp; discipline.</p>
+        </div>
+
+        <div class="card">
+          <div class="label">Profit Sharing</div>
+          <div class="big-num highlight-gold">50-50 (Day 1 Only)</div>
+          <p class="pkg-sub">Day 1 profit-sharing structure followed by program terms.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages (Core + Additional Options) -->
+    <section id="packages" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Package Fees &amp; Additional Options</h2>
+        <p class="section-desc">One-time package options based on capital allocation, plus starter and custom tiers.</p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Core Package 1 -->
+        <div class="pkg-card">
+          <div>
+            <div class="pkg-tier">Package 01 &bull; Core Entry</div>
+            <div class="pkg-capital">Capital: &#8377;30,000</div>
+            <div class="pkg-price">Package: &#8377;25,500</div>
+            <p class="pkg-sub">One-Time Fee &bull; Ideal for starting with minimum capital requirement.</p>
+          </div>
+          <a class="btn btn-primary" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20to%20select%20Package%2001%20(Capital%20%E2%82%B930%2C000%20%7C%20Package%20%E2%82%B925%2C500)." target="_blank" rel="noopener noreferrer">
+            Select Package 01
+          </a>
+        </div>
+
+        <!-- Core Package 2 -->
+        <div class="pkg-card featured">
+          <div>
+            <div class="pkg-tier" style="color: var(--gold);">Package 02 &bull; Popular Plan</div>
+            <div class="pkg-capital">Capital: &#8377;50,000</div>
+            <div class="pkg-price">Package: &#8377;45,500</div>
+            <p class="pkg-sub">One-Time Fee &bull; Balanced capital tier with analyst support &amp; market outlook.</p>
+          </div>
+          <a class="btn btn-gold" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20to%20select%20Package%2002%20(Capital%20%E2%82%B950%2C000%20%7C%20Package%20%E2%82%B945%2C500)." target="_blank" rel="noopener noreferrer">
+            Select Package 02
+          </a>
+        </div>
+
+        <!-- Core Package 3 -->
+        <div class="pkg-card">
+          <div>
+            <div class="pkg-tier">Package 03 &bull; High Capital</div>
+            <div class="pkg-capital">Capital: &#8377;1 Lakh</div>
+            <div class="pkg-price">Package: &#8377;85,500</div>
+            <p class="pkg-sub">One-Time Fee &bull; Designed for higher capital allocation and priority guidance.</p>
+          </div>
+          <a class="btn btn-primary" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20to%20select%20Package%2003%20(Capital%20%E2%82%B91%20Lakh%20%7C%20Package%20%E2%82%B985%2C500)." target="_blank" rel="noopener noreferrer">
+            Select Package 03
+          </a>
+        </div>
+
+        <!-- Additional Option A -->
+        <div class="pkg-card">
+          <div>
+            <div class="pkg-tier">Additional Option &bull; Trial / Analysis Pass</div>
+            <div class="pkg-capital">Market Outlook &amp; Desk Intro</div>
+            <div class="pkg-price">Custom / Inquiry</div>
+            <p class="pkg-sub">For traders who want to understand workflow, risk rules, and live market updates first.</p>
+          </div>
+          <a class="btn btn-outline" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20details%20about%20the%20Market%20Outlook%20%26%20Desk%20Intro%20option." target="_blank" rel="noopener noreferrer">
+            Ask on WhatsApp
+          </a>
+        </div>
+
+        <!-- Additional Option B -->
+        <div class="pkg-card">
+          <div>
+            <div class="pkg-tier">Additional Option &bull; F&amp;O / Index Focus</div>
+            <div class="pkg-capital">Nifty, Sensex &amp; F&amp;O Desk</div>
+            <div class="pkg-price">Tailored Plan</div>
+            <p class="pkg-sub">Focused session structure with stop-loss discipline and position sizing guidance.</p>
+          </div>
+          <a class="btn btn-outline" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20details%20about%20the%20Nifty%2C%20Sensex%20%26%20F%26O%20Desk%20plan." target="_blank" rel="noopener noreferrer">
+            Ask on WhatsApp
+          </a>
+        </div>
+
+        <!-- Additional Option C -->
+        <div class="pkg-card">
+          <div>
+            <div class="pkg-tier">Additional Option &bull; Custom Capital</div>
+            <div class="pkg-capital">Above &#8377;1 Lakh Capital</div>
+            <div class="pkg-price">Custom Quote</div>
+            <p class="pkg-sub">Customized onboarding and schedule discussion for larger trading capitals.</p>
+          </div>
+          <a class="btn btn-outline" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20have%20capital%20above%20%E2%82%B91%20Lakh%20and%20want%20a%20custom%20package." target="_blank" rel="noopener noreferrer">
+            Request Custom Plan
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment Options & How Payment Works -->
+    <section id="payment" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Flexible Payment Options &amp; How Payment Works</h2>
+        <p class="section-desc">Clear payment modes and step-by-step process to complete your package cleanly.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="label">Option A</div>
+          <div class="big-num highlight-gold">INSTANT PAYMENT</div>
+          <p>Get <strong>20% to 25% Instant Discount</strong> on Package Price when paying upfront as per program terms.</p>
+        </div>
+
+        <div class="card">
+          <div class="label">Option B</div>
+          <div class="big-num highlight-green">PARTIAL PAYMENT</div>
+          <p><strong>Day 1:</strong> Profit Sharing. <strong>Day 2:</strong> Registration. <strong>Clear Balance within 5 Days.</strong></p>
+        </div>
+      </div>
+
+      <div class="payment-steps">
+        <div class="step-box">
+          <span class="step-num">Step 1</span>
+          <h3 style="font-size: 1rem; margin-bottom: 6px;">Choose Package &amp; Mode</h3>
+          <p class="pkg-sub">Select your preferred package and whether you want Instant Payment (20%–25% off) or Partial Payment.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">Step 2</span>
+          <h3 style="font-size: 1rem; margin-bottom: 6px;">Confirm via Official WhatsApp</h3>
+          <p class="pkg-sub">Connect directly on <strong>+91 83560 79521</strong> with Share Market Analyzer to verify active offer details and official payment instructions.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">Step 3</span>
+          <h3 style="font-size: 1rem; margin-bottom: 6px;">Share Payment Confirmation</h3>
+          <p class="pkg-sub">Complete transfer via official channel and send payment confirmation to activate onboarding.</p>
+        </div>
+      </div>
+
+      <!-- Quick Package Order Generator -->
+      <div class="card" style="margin-top: 16px;">
+        <div class="label">Quick Package Inquiry / Booking</div>
+        <p class="pkg-sub" style="margin-bottom: 10px;">
+          Select a package below and tap to open WhatsApp with your selected plan pre-filled:
+        </p>
+        <div class="pay-selector">
+          <select id="packageSelect" aria-label="Choose a package">
+            <option value="Package 01 (Capital ₹30,000 | Package ₹25,500)">Package 01 — Capital ₹30,000 | Fee ₹25,500</option>
+            <option value="Package 02 (Capital ₹50,000 | Package ₹45,500)">Package 02 — Capital ₹50,000 | Fee ₹45,500</option>
+            <option value="Package 03 (Capital ₹1 Lakh | Package ₹85,500)">Package 03 — Capital ₹1 Lakh | Fee ₹85,500</option>
+            <option value="Custom / Additional Package Inquiry">Additional / Custom Package Inquiry</option>
+          </select>
+          <button type="button" class="btn btn-primary" onclick="sendSelectedPackage()">
+            Proceed on WhatsApp
+          </button>
+          <a href="#support" class="btn btn-outline">
+            Payment &amp; Billing Help
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits & Trading Approach -->
+    <section id="trading" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Premium Benefits &amp; Trading Approach</h2>
+        <p class="section-desc">Key service inclusions and practical market discipline for Nifty, Sensex, and F&amp;O.</p>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3 style="font-size: 1.05rem; color: var(--gold); margin-bottom: 10px;">Premium Benefits &amp; Service</h3>
+          <ul class="list-stack">
+            <li><strong>2-3 Days Accurated Premium Trades</strong> (100% Client Profit)</li>
+            <li><strong>Minimum Risk, Maximum Profit Strategy</strong></li>
+            <li><strong>30 Market Days Service Validity</strong></li>
+            <li><strong>Dedicated Market Analyst Support</strong></li>
+            <li><strong>Daily Market Outlook &amp; Live Updates</strong></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.05rem; color: var(--gold); margin-bottom: 10px;">What Makes Good Trading Matter</h3>
+          <ul class="list-stack">
+            <li><strong>Discipline Over Emotion:</strong> Avoiding revenge trades or over-leveraging after a loss.</li>
+            <li><strong>Risk-to-Reward Clarity:</strong> Knowing risk levels before entering Nifty, Sensex, or F&amp;O setups.</li>
+            <li><strong>Market Context &amp; Volatility:</strong> Respecting trend, index movement, and expiry/event volatility.</li>
+            <li><strong>Capital Preservation First:</strong> Protecting principal so you stay active across market cycles.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Safety, Site Security & SEBI Compliance -->
+    <section id="safety" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Safety, Site Guidelines &amp; SEBI Compliance</h2>
+        <p class="section-desc">Transparency, account safety, and regulatory clarity for every visitor.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="label">Site &amp; Client Safety Rules</div>
+          <ul class="list-stack" style="margin-top: 8px;">
+            <li><strong>Official Number Only:</strong> Trust communication only from <strong>+91 83560 79521</strong> and <strong>stockmarketanalyser51@gmail.com</strong>.</li>
+            <li><strong>Never Share Passwords / OTPs:</strong> Never share your demat login password, PIN, or OTP with anyone.</li>
+            <li><strong>Verify Payment Details:</strong> Always confirm payment instructions directly on our official WhatsApp before transferring funds.</li>
+            <li><strong>Secure Browsing:</strong> Access Share Market Analyzer via HTTPS link and keep your device/browser updated.</li>
+          </ul>
+        </div>
+
+        <div class="compliance-box">
+          <h3>SEBI Registration &amp; Regulatory Status</h3>
+          <p style="font-size: 0.94rem; margin-bottom: 10px;">
+            <strong>SEBI Registration Status:</strong> <em>[Add Official SEBI Registration Number / Status Here, e.g., SEBI Reg. No. INZ000000000 or Mention Current Advisory/Registration Status Accurately]</em>.
+          </p>
+          <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 10px;">
+            Investment in securities market are subject to market risks. Read all the related documents carefully before investing. Past performance is not indicative of future returns.
+          </p>
+          <p style="font-size: 0.88rem; color: var(--text-sub);">
+            Note: Replace the bracketed placeholder above with your actual SEBI registration number or exact regulatory status before publishing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support & Contact Section -->
+    <section id="support" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Support Team, Service Desk &amp; Contact</h2>
+        <p class="section-desc">For any service request, package question, payment assistance, or support team connect:</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="label">Service &amp; Support WhatsApp / Call</div>
+          <p style="margin-bottom: 6px;"><a href="tel:+918356079521">+91 83560 79521</a></p>
+          <a class="btn btn-primary" style="padding: 8px 14px; font-size: 0.85rem;" href="https://wa.me/918356079521?text=Hello%20Support%20Team%2C%20I%20need%20assistance%20regarding%20Share%20Market%20Analyzer." target="_blank" rel="noopener noreferrer">
+            Chat with Support Team
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="label">Official Email Support</div>
+          <p style="margin-bottom: 6px;"><a href="mailto:stockmarketanalyser51@gmail.com">stockmarketanalyser51@gmail.com</a></p>
+          <span class="pkg-sub">For documentation, inquiries &amp; written support.</span>
+        </div>
+
+        <div class="contact-card">
+          <div class="label">Official Website Link</div>
+          <!-- Apna naya live URL banne ke baad neeche wali link update kar lena -->
+          <a href="https://your-new-website-link.com" target="_blank" rel="noopener noreferrer">
+            https://your-new-website-link.com
+          </a>
+          <p class="pkg-sub" style="margin-top: 6px;">Replace with your live URL once published.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="disclaimer">
+      <strong>Risk &amp; Market Disclaimer:</strong> Trading and investing in equities, indices (Nifty, Sensex), and Futures &amp; Options (F&amp;O) involve substantial financial risk, including the possible loss of capital. Potential figures such as daily return targets, profit sharing, or package discounts are subject to market conditions and program terms. Please evaluate your risk tolerance carefully.
+    </div>
+
+    <footer>
+      &copy; Share Market Analyzer &bull; Support: +91 83560 79521
+    </footer>
+  </div>
+
+  <script>
+    function sendSelectedPackage() {
+      const select = document.getElementById("packageSelect");
+      const selectedText = select.value;
+      const message = encodeURIComponent(
+        `Hello Share Market Analyzer, I want to proceed with: ${selectedText}. Please share next steps.`
+      );
+      window.open(`https://wa.me/918356079521?text=${message}`, "_blank", "noopener,noreferrer");
+    }
+  </script>
+</body>
+</html>
