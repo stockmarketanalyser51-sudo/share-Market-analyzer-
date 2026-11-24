@@ -1,815 +1,804 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Share Market Analyzer — Professional Trading Desk</title>
+  <title>Share Market Analyzer | Research-Backed Stock Market Insights & Advisory</title>
+  <meta name="description" content="Get structured Nifty, Bank Nifty, Finnifty, Equity & BTST research insights with strict stop-loss and risk management from Share Market Analyzer." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-deep: #050d14;
-      --bg-navy: #0b1926;
-      --bg-card: #102436;
-      --bg-card-hover: #153048;
-      --emerald: #16c784;
-      --emerald-dark: #0e9662;
-      --gold: #f5be41;
-      --cyan: #38bdf8;
-      --text-main: #f3f7fa;
-      --text-sub: #a9bfd1;
-      --border: rgba(255, 255, 255, 0.11);
-      --glow: 0 16px 40px rgba(0, 0, 0, 0.45);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      scroll-behavior: smooth;
-    }
-
     body {
-      background:
-        radial-gradient(circle at top right, rgba(22, 199, 132, 0.14), transparent 36%),
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 34%),
-        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-navy) 52%, var(--bg-deep) 100%);
-      color: var(--text-main);
-      line-height: 1.65;
-      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background-color: #060D1A;
+      color: #F8FAFC;
     }
-
-    /* Top Navigation Bar */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(5, 13, 20, 0.85);
-      border-bottom: 1px solid var(--border);
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
-
-    .nav-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 12px 18px;
+    .glass-card {
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #D97706 100%);
+    }
+    .emerald-gradient {
+      background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      width: max-content;
+      animation: marquee 30s linear infinite;
     }
-
-    .nav-brand {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .nav-brand strong {
-      font-size: 1.08rem;
-      letter-spacing: 0.4px;
-      color: var(--text-main);
-    }
-
-    .nav-brand span {
-      font-size: 0.75rem;
-      color: var(--gold);
-      font-weight: 700;
-      letter-spacing: 0.6px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      font-size: 0.88rem;
-    }
-
-    .nav-links a {
-      color: var(--text-sub);
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--emerald);
-    }
-
-    .nav-cta {
-      background: var(--emerald);
-      color: #04140d !important;
-      padding: 7px 13px;
-      border-radius: 9px;
-      font-weight: 700 !important;
-    }
-
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 28px 18px 64px;
-    }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, rgba(22, 199, 132, 0.16), rgba(16, 36, 54, 0.95) 55%, rgba(245, 190, 65, 0.08));
-      border: 1px solid rgba(22, 199, 132, 0.3);
-      border-radius: 24px;
-      padding: 36px 24px;
-      box-shadow: var(--glow);
-      text-align: center;
-    }
-
-    .badge-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .badge {
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-    }
-
-    .badge-gold {
-      background: rgba(245, 190, 65, 0.15);
-      color: var(--gold);
-      border: 1px solid rgba(245, 190, 65, 0.4);
-    }
-
-    .badge-green {
-      background: rgba(22, 199, 132, 0.15);
-      color: var(--emerald);
-      border: 1px solid rgba(22, 199, 132, 0.4);
-    }
-
-    .hero h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 10px;
-    }
-
-    .hero-tagline {
-      color: var(--text-sub);
-      font-size: 0.98rem;
-      margin-bottom: 20px;
-    }
-
-    .market-tags {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    .market-tag {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 9px 15px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.94rem;
-      cursor: pointer;
-      border: none;
-      transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: var(--emerald);
-      color: #04150d;
-    }
-
-    .btn-gold {
-      background: var(--gold);
-      color: #1c1302;
-    }
-
-    .btn-outline {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-main);
-      border: 1px solid var(--border);
-    }
-
-    /* Section Styling */
-    .section {
-      margin-top: 28px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 26px 22px;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
-    }
-
-    .section-header {
-      margin-bottom: 18px;
-    }
-
-    .section-title {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--gold);
-      margin-bottom: 4px;
-    }
-
-    .section-desc {
-      font-size: 0.93rem;
-      color: var(--text-sub);
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--bg-navy);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .card:hover {
-      border-color: rgba(22, 199, 132, 0.45);
-      transform: translateY(-2px);
-    }
-
-    .label {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-
-    .big-num {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 6px;
-    }
-
-    .highlight-green {
-      color: var(--emerald);
-    }
-
-    .highlight-gold {
-      color: var(--gold);
-    }
-
-    /* Package Cards */
-    .pkg-card {
-      background: linear-gradient(180deg, #153149 0%, #0b1b29 100%);
-      border: 1px solid rgba(22, 199, 132, 0.35);
-      border-radius: 18px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .pkg-card.featured {
-      border: 1.5px solid var(--gold);
-      box-shadow: 0 0 0 1px rgba(245, 190, 65, 0.2);
-    }
-
-    .pkg-tier {
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: var(--emerald);
-      text-transform: uppercase;
-      letter-spacing: 0.7px;
-      margin-bottom: 4px;
-    }
-
-    .pkg-capital {
-      font-size: 1.15rem;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .pkg-price {
-      font-size: 1.55rem;
-      font-weight: 800;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-
-    .pkg-sub {
-      font-size: 0.86rem;
-      color: var(--text-sub);
-    }
-
-    /* Feature & Info Lists */
-    .list-stack {
-      list-style: none;
-      display: grid;
-      gap: 10px;
-    }
-
-    .list-stack li {
-      background: var(--bg-navy);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 0.94rem;
-    }
-
-    .list-stack strong {
-      color: var(--emerald);
-    }
-
-    /* Payment Box */
-    .payment-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-      margin-top: 14px;
-    }
-
-    .step-box {
-      background: var(--bg-navy);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-    }
-
-    .step-num {
-      display: inline-block;
-      background: rgba(22, 199, 132, 0.16);
-      color: var(--emerald);
-      font-weight: 800;
-      font-size: 0.82rem;
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin-bottom: 8px;
-    }
-
-    .pay-selector {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-      align-items: center;
-    }
-
-    select {
-      background: var(--bg-navy);
-      color: var(--text-main);
-      border: 1px solid var(--border);
-      padding: 11px 14px;
-      border-radius: 11px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      min-width: 240px;
-    }
-
-    /* Compliance / Safety Banner */
-    .compliance-box {
-      background: rgba(245, 190, 65, 0.08);
-      border: 1px solid rgba(245, 190, 65, 0.35);
-      border-radius: 16px;
-      padding: 18px;
-    }
-
-    .compliance-box h3 {
-      color: var(--gold);
-      font-size: 1.08rem;
-      margin-bottom: 8px;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-    }
-
-    .contact-card {
-      background: var(--bg-navy);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-    }
-
-    .contact-card a {
-      color: var(--emerald);
-      text-decoration: none;
-      font-weight: 700;
-      word-break: break-all;
-    }
-
-    .disclaimer {
-      margin-top: 24px;
-      padding: 16px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      font-size: 0.83rem;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 30px;
-      color: var(--text-sub);
-      font-size: 0.86rem;
-    }
-
-    @media (max-width: 640px) {
-      .hero h1 {
-        font-size: 1.75rem;
-      }
-      .nav-links {
-        display: none;
-      }
+    .animate-marquee:hover {
+      animation-play-state: paused;
     }
   </style>
 </head>
-<body>
-  <!-- Sticky Top Bar -->
-  <nav class="navbar">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        <strong>Share Market Analyzer</strong>
-        <span>PROFESSIONAL TRADING DESK</span>
+<body class="antialiased selection:bg-emerald-500 selection:text-white">
+
+  <!-- TOP LIVE TICKER -->
+  <div class="bg-[#040914] border-b border-slate-800/80 py-2 overflow-hidden text-xs font-medium">
+    <div class="animate-marquee gap-8 items-center">
+      <div class="flex items-center gap-6 px-4">
+        <span class="text-slate-400">NIFTY 50 <span class="text-emerald-400 font-semibold ml-1">24,385.40 (+0.68%) ▲</span></span>
+        <span class="text-slate-400">BANK NIFTY <span class="text-emerald-400 font-semibold ml-1">52,140.15 (+0.82%) ▲</span></span>
+        <span class="text-slate-400">FINNIFTY <span class="text-emerald-400 font-semibold ml-1">23,890.50 (+0.54%) ▲</span></span>
+        <span class="text-slate-400">SENSEX <span class="text-emerald-400 font-semibold ml-1">80,120.75 (+0.61%) ▲</span></span>
+        <span class="text-slate-400">INDIA VIX <span class="text-amber-400 font-semibold ml-1">13.45 (-3.10%) ▼</span></span>
+        <span class="text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">LIMITED OFFER: FLAT 20% OFF + 15-DAY EXTENSION PROTECTION</span>
       </div>
-      <div class="nav-links">
-        <a href="#overview">Overview</a>
-        <a href="#packages">Packages</a>
-        <a href="#payment">Payment</a>
-        <a href="#safety">Safety &amp; SEBI</a>
-        <a href="#support">Support</a>
-        <a href="https://wa.me/918356079521" target="_blank" rel="noopener noreferrer" class="nav-cta">
-          WhatsApp: +91 83560 79521
-        </a>
+      <div class="flex items-center gap-6 px-4" aria-hidden="true">
+        <span class="text-slate-400">NIFTY 50 <span class="text-emerald-400 font-semibold ml-1">24,385.40 (+0.68%) ▲</span></span>
+        <span class="text-slate-400">BANK NIFTY <span class="text-emerald-400 font-semibold ml-1">52,140.15 (+0.82%) ▲</span></span>
+        <span class="text-slate-400">FINNIFTY <span class="text-emerald-400 font-semibold ml-1">23,890.50 (+0.54%) ▲</span></span>
+        <span class="text-slate-400">SENSEX <span class="text-emerald-400 font-semibold ml-1">80,120.75 (+0.61%) ▲</span></span>
+        <span class="text-slate-400">INDIA VIX <span class="text-amber-400 font-semibold ml-1">13.45 (-3.10%) ▼</span></span>
+        <span class="text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">LIMITED OFFER: FLAT 20% OFF + 15-DAY EXTENSION PROTECTION</span>
       </div>
     </div>
-  </nav>
-
-  <div class="container">
-    <!-- Hero Section -->
-    <header class="hero">
-      <div class="badge-row">
-        <span class="badge badge-gold">Daily Profit Program</span>
-        <span class="badge badge-green">Structured Market Analysis</span>
-      </div>
-
-      <h1>Share Market Analyzer</h1>
-      <p class="hero-tagline">WEALTH CREATION THROUGH EXPERTISE &bull; YOUR TRUSTED TRADING PARTNERS</p>
-
-      <div class="market-tags">
-        <span class="market-tag">NIFTY EXPERT</span>
-        <span class="market-tag">SENSEX EXPERT</span>
-        <span class="market-tag">F&amp;O EXPERT</span>
-      </div>
-
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://wa.me/918356079521?text=Hello%20Share%20Market%20Analyzer%2C%20I%20want%20details%20about%20the%20Daily%20Profit%20Program." target="_blank" rel="noopener noreferrer">
-          Connect on WhatsApp (+91 83560 79521)
-        </a>
-        <a class="btn btn-gold" href="#packages">
-          View Packages &amp; Plans
-        </a>
-        <a class="btn btn-outline" href="#payment">
-          How to Pay
-        </a>
-      </div>
-    </header>
-
-    <!-- Capital & Program Overview -->
-    <section id="overview" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Share Market Analyzer &mdash; Program Overview</h2>
-        <p class="section-desc">Core parameters of the Daily Profit Program designed for disciplined traders.</p>
-      </div>
-
-      <div class="grid-3">
-        <div class="card">
-          <div class="label">Minimum Capital Required</div>
-          <div class="big-num">&#8377;30,000</div>
-          <p class="pkg-sub">Starting trading capital requirement for core program eligibility.</p>
-        </div>
-
-        <div class="card">
-          <div class="label">Daily Return Potential</div>
-          <div class="big-num highlight-green">&#8377;18,000 - &#8377;20,000*</div>
-          <p class="pkg-sub">Illustrative potential target depending on market volatility &amp; discipline.</p>
-        </div>
-
-        <div class="card">
-          <div class="label">Profit Sharing</div>
-          <div class="big-num highlight-gold">50-50 (Day 1 Only)</div>
-          <p class="pkg-sub">Day 1 profit-sharing structure followed by program terms.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Packages (Core + Additional Options) -->
-    <section id="packages" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Package Fees &amp; Additional Options</h2>
-        <p class="section-desc">One-time package options based on capital allocation, plus starter and custom tiers.</p>
-      </div>
-
-      <div class="grid-3">
-        <!-- Core Package 1 -->
-        <div class="pkg-card">
-          <div>
-            <div class="pkg-tier">Package 01 &bull; Core Entry</div>
-            <div class="pkg-capital">Capital: &#8377;30,000</div>
-            <div class="pkg-price">Package: &#8377;25,500</div>
-            <p class="pkg-sub">One-Time Fee &bull; Ideal for starting with minimum capital requirement.</p>
-          </div>
-          <a class="btn btn-primary" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20to%20select%20Package%2001%20(Capital%20%E2%82%B930%2C000%20%7C%20Package%20%E2%82%B925%2C500)." target="_blank" rel="noopener noreferrer">
-            Select Package 01
-          </a>
-        </div>
-
-        <!-- Core Package 2 -->
-        <div class="pkg-card featured">
-          <div>
-            <div class="pkg-tier" style="color: var(--gold);">Package 02 &bull; Popular Plan</div>
-            <div class="pkg-capital">Capital: &#8377;50,000</div>
-            <div class="pkg-price">Package: &#8377;45,500</div>
-            <p class="pkg-sub">One-Time Fee &bull; Balanced capital tier with analyst support &amp; market outlook.</p>
-          </div>
-          <a class="btn btn-gold" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20to%20select%20Package%2002%20(Capital%20%E2%82%B950%2C000%20%7C%20Package%20%E2%82%B945%2C500)." target="_blank" rel="noopener noreferrer">
-            Select Package 02
-          </a>
-        </div>
-
-        <!-- Core Package 3 -->
-        <div class="pkg-card">
-          <div>
-            <div class="pkg-tier">Package 03 &bull; High Capital</div>
-            <div class="pkg-capital">Capital: &#8377;1 Lakh</div>
-            <div class="pkg-price">Package: &#8377;85,500</div>
-            <p class="pkg-sub">One-Time Fee &bull; Designed for higher capital allocation and priority guidance.</p>
-          </div>
-          <a class="btn btn-primary" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20to%20select%20Package%2003%20(Capital%20%E2%82%B91%20Lakh%20%7C%20Package%20%E2%82%B985%2C500)." target="_blank" rel="noopener noreferrer">
-            Select Package 03
-          </a>
-        </div>
-
-        <!-- Additional Option A -->
-        <div class="pkg-card">
-          <div>
-            <div class="pkg-tier">Additional Option &bull; Trial / Analysis Pass</div>
-            <div class="pkg-capital">Market Outlook &amp; Desk Intro</div>
-            <div class="pkg-price">Custom / Inquiry</div>
-            <p class="pkg-sub">For traders who want to understand workflow, risk rules, and live market updates first.</p>
-          </div>
-          <a class="btn btn-outline" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20details%20about%20the%20Market%20Outlook%20%26%20Desk%20Intro%20option." target="_blank" rel="noopener noreferrer">
-            Ask on WhatsApp
-          </a>
-        </div>
-
-        <!-- Additional Option B -->
-        <div class="pkg-card">
-          <div>
-            <div class="pkg-tier">Additional Option &bull; F&amp;O / Index Focus</div>
-            <div class="pkg-capital">Nifty, Sensex &amp; F&amp;O Desk</div>
-            <div class="pkg-price">Tailored Plan</div>
-            <p class="pkg-sub">Focused session structure with stop-loss discipline and position sizing guidance.</p>
-          </div>
-          <a class="btn btn-outline" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20want%20details%20about%20the%20Nifty%2C%20Sensex%20%26%20F%26O%20Desk%20plan." target="_blank" rel="noopener noreferrer">
-            Ask on WhatsApp
-          </a>
-        </div>
-
-        <!-- Additional Option C -->
-        <div class="pkg-card">
-          <div>
-            <div class="pkg-tier">Additional Option &bull; Custom Capital</div>
-            <div class="pkg-capital">Above &#8377;1 Lakh Capital</div>
-            <div class="pkg-price">Custom Quote</div>
-            <p class="pkg-sub">Customized onboarding and schedule discussion for larger trading capitals.</p>
-          </div>
-          <a class="btn btn-outline" href="https://wa.me/918356079521?text=Hi%20Share%20Market%20Analyzer%2C%20I%20have%20capital%20above%20%E2%82%B91%20Lakh%20and%20want%20a%20custom%20package." target="_blank" rel="noopener noreferrer">
-            Request Custom Plan
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Payment Options & How Payment Works -->
-    <section id="payment" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Flexible Payment Options &amp; How Payment Works</h2>
-        <p class="section-desc">Clear payment modes and step-by-step process to complete your package cleanly.</p>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <div class="label">Option A</div>
-          <div class="big-num highlight-gold">INSTANT PAYMENT</div>
-          <p>Get <strong>20% to 25% Instant Discount</strong> on Package Price when paying upfront as per program terms.</p>
-        </div>
-
-        <div class="card">
-          <div class="label">Option B</div>
-          <div class="big-num highlight-green">PARTIAL PAYMENT</div>
-          <p><strong>Day 1:</strong> Profit Sharing. <strong>Day 2:</strong> Registration. <strong>Clear Balance within 5 Days.</strong></p>
-        </div>
-      </div>
-
-      <div class="payment-steps">
-        <div class="step-box">
-          <span class="step-num">Step 1</span>
-          <h3 style="font-size: 1rem; margin-bottom: 6px;">Choose Package &amp; Mode</h3>
-          <p class="pkg-sub">Select your preferred package and whether you want Instant Payment (20%–25% off) or Partial Payment.</p>
-        </div>
-        <div class="step-box">
-          <span class="step-num">Step 2</span>
-          <h3 style="font-size: 1rem; margin-bottom: 6px;">Confirm via Official WhatsApp</h3>
-          <p class="pkg-sub">Connect directly on <strong>+91 83560 79521</strong> with Share Market Analyzer to verify active offer details and official payment instructions.</p>
-        </div>
-        <div class="step-box">
-          <span class="step-num">Step 3</span>
-          <h3 style="font-size: 1rem; margin-bottom: 6px;">Share Payment Confirmation</h3>
-          <p class="pkg-sub">Complete transfer via official channel and send payment confirmation to activate onboarding.</p>
-        </div>
-      </div>
-
-      <!-- Quick Package Order Generator -->
-      <div class="card" style="margin-top: 16px;">
-        <div class="label">Quick Package Inquiry / Booking</div>
-        <p class="pkg-sub" style="margin-bottom: 10px;">
-          Select a package below and tap to open WhatsApp with your selected plan pre-filled:
-        </p>
-        <div class="pay-selector">
-          <select id="packageSelect" aria-label="Choose a package">
-            <option value="Package 01 (Capital ₹30,000 | Package ₹25,500)">Package 01 — Capital ₹30,000 | Fee ₹25,500</option>
-            <option value="Package 02 (Capital ₹50,000 | Package ₹45,500)">Package 02 — Capital ₹50,000 | Fee ₹45,500</option>
-            <option value="Package 03 (Capital ₹1 Lakh | Package ₹85,500)">Package 03 — Capital ₹1 Lakh | Fee ₹85,500</option>
-            <option value="Custom / Additional Package Inquiry">Additional / Custom Package Inquiry</option>
-          </select>
-          <button type="button" class="btn btn-primary" onclick="sendSelectedPackage()">
-            Proceed on WhatsApp
-          </button>
-          <a href="#support" class="btn btn-outline">
-            Payment &amp; Billing Help
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Benefits & Trading Approach -->
-    <section id="trading" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Premium Benefits &amp; Trading Approach</h2>
-        <p class="section-desc">Key service inclusions and practical market discipline for Nifty, Sensex, and F&amp;O.</p>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <h3 style="font-size: 1.05rem; color: var(--gold); margin-bottom: 10px;">Premium Benefits &amp; Service</h3>
-          <ul class="list-stack">
-            <li><strong>2-3 Days Accurated Premium Trades</strong> (100% Client Profit)</li>
-            <li><strong>Minimum Risk, Maximum Profit Strategy</strong></li>
-            <li><strong>30 Market Days Service Validity</strong></li>
-            <li><strong>Dedicated Market Analyst Support</strong></li>
-            <li><strong>Daily Market Outlook &amp; Live Updates</strong></li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 style="font-size: 1.05rem; color: var(--gold); margin-bottom: 10px;">What Makes Good Trading Matter</h3>
-          <ul class="list-stack">
-            <li><strong>Discipline Over Emotion:</strong> Avoiding revenge trades or over-leveraging after a loss.</li>
-            <li><strong>Risk-to-Reward Clarity:</strong> Knowing risk levels before entering Nifty, Sensex, or F&amp;O setups.</li>
-            <li><strong>Market Context &amp; Volatility:</strong> Respecting trend, index movement, and expiry/event volatility.</li>
-            <li><strong>Capital Preservation First:</strong> Protecting principal so you stay active across market cycles.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Safety, Site Security & SEBI Compliance -->
-    <section id="safety" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Safety, Site Guidelines &amp; SEBI Compliance</h2>
-        <p class="section-desc">Transparency, account safety, and regulatory clarity for every visitor.</p>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <div class="label">Site &amp; Client Safety Rules</div>
-          <ul class="list-stack" style="margin-top: 8px;">
-            <li><strong>Official Number Only:</strong> Trust communication only from <strong>+91 83560 79521</strong> and <strong>stockmarketanalyser51@gmail.com</strong>.</li>
-            <li><strong>Never Share Passwords / OTPs:</strong> Never share your demat login password, PIN, or OTP with anyone.</li>
-            <li><strong>Verify Payment Details:</strong> Always confirm payment instructions directly on our official WhatsApp before transferring funds.</li>
-            <li><strong>Secure Browsing:</strong> Access Share Market Analyzer via HTTPS link and keep your device/browser updated.</li>
-          </ul>
-        </div>
-
-        <div class="compliance-box">
-          <h3>SEBI Registration &amp; Regulatory Status</h3>
-          <p style="font-size: 0.94rem; margin-bottom: 10px;">
-            <strong>SEBI Registration Status:</strong> <em>[Add Official SEBI Registration Number / Status Here, e.g., SEBI Reg. No. INZ000000000 or Mention Current Advisory/Registration Status Accurately]</em>.
-          </p>
-          <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 10px;">
-            Investment in securities market are subject to market risks. Read all the related documents carefully before investing. Past performance is not indicative of future returns.
-          </p>
-          <p style="font-size: 0.88rem; color: var(--text-sub);">
-            Note: Replace the bracketed placeholder above with your actual SEBI registration number or exact regulatory status before publishing.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Support & Contact Section -->
-    <section id="support" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Support Team, Service Desk &amp; Contact</h2>
-        <p class="section-desc">For any service request, package question, payment assistance, or support team connect:</p>
-      </div>
-
-      <div class="contact-grid">
-        <div class="contact-card">
-          <div class="label">Service &amp; Support WhatsApp / Call</div>
-          <p style="margin-bottom: 6px;"><a href="tel:+918356079521">+91 83560 79521</a></p>
-          <a class="btn btn-primary" style="padding: 8px 14px; font-size: 0.85rem;" href="https://wa.me/918356079521?text=Hello%20Support%20Team%2C%20I%20need%20assistance%20regarding%20Share%20Market%20Analyzer." target="_blank" rel="noopener noreferrer">
-            Chat with Support Team
-          </a>
-        </div>
-
-        <div class="contact-card">
-          <div class="label">Official Email Support</div>
-          <p style="margin-bottom: 6px;"><a href="mailto:stockmarketanalyser51@gmail.com">stockmarketanalyser51@gmail.com</a></p>
-          <span class="pkg-sub">For documentation, inquiries &amp; written support.</span>
-        </div>
-
-        <div class="contact-card">
-          <div class="label">Official Website Link</div>
-          <!-- Apna naya live URL banne ke baad neeche wali link update kar lena -->
-          <a href="https//share-market-analyzer-in.vercel.app" target="_blank" rel="noopener noreferrer">
-            https://share-market-analyzer-in.vercel.app
-          </a>
-          <p class="pkg-sub" style="margin-top: 6px;">Replace with your live URL once published.</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="disclaimer">
-      <strong>Risk &amp; Market Disclaimer:</strong> Trading and investing in equities, indices (Nifty, Sensex), and Futures &amp; Options (F&amp;O) involve substantial financial risk, including the possible loss of capital. Potential figures such as daily return targets, profit sharing, or package discounts are subject to market conditions and program terms. Please evaluate your risk tolerance carefully.
-    </div>
-
-    <footer>
-      &copy; Share Market Analyzer &bull; Support: +91 83560 79521
-    </footer>
   </div>
 
+  <!-- STICKY HEADER / NAVBAR -->
+  <header class="sticky top-0 z-40 bg-[#060D1A]/90 backdrop-blur-lg border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Custom Inline SVG Logo -->
+      <a href="#home" class="flex items-center gap-3 group">
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0">
+          <rect width="64" height="64" rx="16" fill="#0F1E36" stroke="#1E3A5F" stroke-width="2"/>
+          <path d="M32 8L50 15V30C50 42.5 42.3 53.2 32 57C21.7 53.2 14 42.5 14 30V15L32 8Z" fill="#0A1426" stroke="#F59E0B" stroke-width="2"/>
+          <rect x="21" y="34" width="4" height="10" rx="1.5" fill="#10B981"/>
+          <line x1="23" y1="30" x2="23" y2="46" stroke="#10B981" stroke-width="1.5"/>
+          <rect x="30" y="27" width="4" height="13" rx="1.5" fill="#10B981"/>
+          <line x1="32" y1="23" x2="32" y2="43" stroke="#10B981" stroke-width="1.5"/>
+          <rect x="39" y="20" width="4" height="14" rx="1.5" fill="#FBBF24"/>
+          <line x1="41" y1="16" x2="41" y2="37" stroke="#FBBF24" stroke-width="1.5"/>
+          <path d="M19 39L28 31L34 34L45 21" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M39 21H45V27" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <span class="font-heading font-extrabold text-lg sm:text-xl tracking-tight text-white block leading-none">
+            SHARE MARKET <span class="text-emerald-400">ANALYZER</span>
+          </span>
+          <span class="text-[10px] tracking-[0.2em] text-amber-400 font-semibold uppercase mt-1 block">
+            PRO RESEARCH &amp; RISK DESK
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#home" class="hover:text-emerald-400 transition">Home</a>
+        <a href="#why-us" class="hover:text-emerald-400 transition">Why Us</a>
+        <a href="#services" class="hover:text-emerald-400 transition">Services</a>
+        <a href="#calculator" class="hover:text-emerald-400 transition">Risk Calculator</a>
+        <a href="#plans" class="hover:text-emerald-400 transition">Plans &amp; Offers</a>
+        <a href="#contact" class="hover:text-emerald-400 transition">Contact</a>
+      </nav>
+
+      <!-- Dual Action CTAs -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="openLeadModal('Free 2-Day Research Trial')" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs sm:text-sm font-semibold border border-slate-700 transition">
+          Free Trial / Enquire
+        </button>
+        <a href="https://wa.me/918356079521?text=Hello%20Share%20Market%20Analyzer%2C%20I%20visited%20your%20website%20and%20want%20to%20know%20more%20about%20your%20trading%20research%20plans." target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl emerald-gradient hover:opacity-95 text-white text-xs sm:text-sm font-bold shadow-lg shadow-emerald-500/20 transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+          WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION WITH DUAL LEAD CAPTURE -->
+  <section id="home" class="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <!-- Left Copy -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            Data-Driven Index &amp; Equity Research Desk • Trusted by 18,500+ Traders
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.12] tracking-tight">
+            Trade With <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Precision,</span> Not Guesswork.
+          </h1>
+
+          <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+            Whether you are a <strong class="text-white">complete fresher</strong> starting with ₹10,000 or an <strong class="text-white">active F&amp;O trader</strong> scaling capital, get structured Nifty, Bank Nifty, Finnifty, and Stock setups with pre-defined <span class="text-amber-400 font-semibold">Entry, Strict Stop-Loss, and Step-by-Step Targets</span>.
+          </p>
+
+          <!-- Key Trust Highlights -->
+          <div class="grid grid-cols-3 gap-4 pt-2 max-w-xl">
+            <div class="glass-card p-4 rounded-2xl">
+              <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">1:2.5+</div>
+              <div class="text-xs text-slate-400 mt-1">Risk-to-Reward Discipline</div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl">
+              <div class="text-2xl sm:text-3xl font-extrabold text-amber-400">15-Day</div>
+              <div class="text-xs text-slate-400 mt-1">Free Plan Extension Shield</div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl">
+              <div class="text-2xl sm:text-3xl font-extrabold text-white">2-Day</div>
+              <div class="text-xs text-slate-400 mt-1">Free Demo Access First</div>
+            </div>
+          </div>
+
+          <!-- Dual Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#plans" class="px-6 py-3.5 rounded-xl gold-gradient text-slate-950 font-extrabold text-sm sm:text-base shadow-lg shadow-amber-500/20 hover:opacity-95 transition">
+              Explore Plans &amp; 20% Offer →
+            </a>
+            <a href="tel:+918356079521" class="px-6 py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-800 text-white font-semibold text-sm sm:text-base border border-slate-700 transition">
+              Call Desk: +91 83560 79521
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Interactive Lead Capture Card (Dual Website + WhatsApp) -->
+        <div class="lg:col-span-5">
+          <div class="glass-card rounded-3xl p-6 sm:p-8 border border-emerald-500/30 shadow-2xl relative">
+            <div class="absolute -top-3.5 right-6 px-3 py-1 rounded-full gold-gradient text-slate-950 text-xs font-extrabold uppercase tracking-wider">
+              Free Capital Match + 2-Day Trial
+            </div>
+
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Get Your Personalized Trading Plan</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">Fill in your details to get a custom strategy directly on our website or instant WhatsApp support.</p>
+
+            <!-- Direct Email Form via FormSubmit.co -->
+            <form id="heroLeadForm" action="https://formsubmit.co/stockmarketanalyser51@gmail.com" method="POST" class="mt-5 space-y-4">
+              <!-- FormSubmit Config -->
+              <input type="hidden" name="_subject" value="New Website Lead - Share Market Analyzer">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="hidden" name="_template" value="table">
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Full Name *</label>
+                <input type="text" id="heroName" name="Full_Name" required placeholder="e.g., Rahul Sharma" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-400" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Mobile / WhatsApp Number *</label>
+                <input type="tel" id="heroPhone" name="Phone_Number" required placeholder="e.g., +91 98765 43210" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-400" />
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Available Capital *</label>
+                  <select id="heroCapital" name="Trading_Capital" required class="w-full px-3.5 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-400">
+                    <option value="Below ₹25,000 (Starter)">Below ₹25,000</option>
+                    <option value="₹25,000 – ₹1,00,000" selected>₹25,000 – ₹1 Lakh</option>
+                    <option value="₹1,00,000 – ₹5,00,000">₹1 Lakh – ₹5 Lakhs</option>
+                    <option value="₹5,00,000+ (HNI Desk)">₹5 Lakhs+ (HNI)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Experience / Segment *</label>
+                  <select id="heroSegment" name="Segment_Or_Experience" required class="w-full px-3.5 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-400">
+                    <option value="Complete Fresher / Beginner">Fresher / Beginner</option>
+                    <option value="Nifty & Bank Nifty Options" selected>Nifty / Bank Nifty Options</option>
+                    <option value="Equity Cash & Swing">Equity Cash &amp; Swing</option>
+                    <option value="BTST & Expiry Special">BTST &amp; Expiry Trades</option>
+                    <option value="Stock Futures & Options">Stock F&amp;O</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Dual Submission Buttons -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition shadow-lg shadow-indigo-600/20">
+                  Submit on Website
+                </button>
+                <button type="button" onclick="sendHeroToWhatsApp()" class="w-full py-3.5 px-4 rounded-xl emerald-gradient hover:opacity-95 text-white font-bold text-sm transition shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-1.5">
+                  <span>Send via WhatsApp</span>
+                </button>
+              </div>
+              <p class="text-[11px] text-slate-400 text-center">Zero spam. Your details go directly to our senior analyst desk.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY SHARE MARKET ANALYZER IS BETTER -->
+  <section id="why-us" class="py-20 bg-[#081122] border-y border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Why Traders Switch To Us</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">How Our Process Beats Typical Advisory Firms</h2>
+        <p class="text-slate-400 mt-3 text-sm sm:text-base">Most advisories push over-trading and vague targets. We focus on capital protection, logical chart levels, and transparent onboarding.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <div class="glass-card p-6 rounded-2xl border-t-2 border-t-emerald-400">
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-extrabold text-lg mb-4">01</div>
+          <h3 class="text-lg font-bold text-white">Fresher-First Handholding</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">New to the market? We teach you lot sizing, stop-loss placement, and broker execution before you take your first live trade.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border-t-2 border-t-amber-400">
+          <div class="w-11 h-11 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center font-extrabold text-lg mb-4">02</div>
+          <h3 class="text-lg font-bold text-white">Pre-Defined SL &amp; Trailing</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">Every single call carries an exact entry zone, hard stop-loss, and Target 1 / Target 2 levels with live trailing updates.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border-t-2 border-t-sky-400">
+          <div class="w-11 h-11 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center font-extrabold text-lg mb-4">03</div>
+          <h3 class="text-lg font-bold text-white">15-Day Extension Shield</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">If our monthly research benchmark isn't met on your active plan, we extend your service by 15 days at zero extra fee.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border-t-2 border-t-purple-400">
+          <div class="w-11 h-11 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center font-extrabold text-lg mb-4">04</div>
+          <h3 class="text-lg font-bold text-white">Dual Support Desk</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">Get instant alerts on WhatsApp plus direct phone/email assistance during live market hours (9:00 AM – 3:30 PM).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section id="services" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Comprehensive Market Coverage</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Specialized Research Segments</h2>
+        </div>
+        <p class="text-slate-400 text-sm max-w-md">Choose one focused segment or combine index and equity research tailored to your capital size.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-card p-7 rounded-2xl hover:border-emerald-500/40 transition">
+          <span class="px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold">INDEX OPTIONS</span>
+          <h3 class="text-xl font-bold text-white mt-4">Nifty, Bank Nifty &amp; Finnifty</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">High-momentum intraday and expiry-day option buying setups backed by OI data, VWAP, and price-action breakouts.</p>
+          <ul class="mt-4 space-y-2 text-xs text-slate-300">
+            <li>• Exact strike price &amp; entry range</li>
+            <li>• Strict 15–25 point option stop-loss</li>
+            <li>• Live exit &amp; profit-booking alerts</li>
+          </ul>
+        </div>
+
+        <div class="glass-card p-7 rounded-2xl hover:border-amber-500/40 transition">
+          <span class="px-3 py-1 rounded-lg bg-amber-500/10 text-amber-400 text-xs font-bold">SWING &amp; BTST</span>
+          <h3 class="text-xl font-bold text-white mt-4">BTST &amp; Positional Stock Calls</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">Overnight Buy Today Sell Tomorrow (BTST) and 3–10 day swing setups in high-liquidity Nifty 200 stocks.</p>
+          <ul class="mt-4 space-y-2 text-xs text-slate-300">
+            <li>• Ideal for working professionals</li>
+            <li>• Volume-breakout &amp; sector rotation picks</li>
+            <li>• Clear holding horizon &amp; risk ratio</li>
+          </ul>
+        </div>
+
+        <div class="glass-card p-7 rounded-2xl hover:border-sky-500/40 transition">
+          <span class="px-3 py-1 rounded-lg bg-sky-500/10 text-sky-400 text-xs font-bold">PORTFOLIO &amp; WEALTH</span>
+          <h3 class="text-xl font-bold text-white mt-4">Equity Portfolio Restructuring</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">Audit your existing stuck holdings, rebalance weak stocks into fundamentally strong compounders, and plan long-term goals.</p>
+          <ul class="mt-4 space-y-2 text-xs text-slate-300">
+            <li>• Complete portfolio health checkup</li>
+            <li>• Hedging strategies for large capital</li>
+            <li>• 1-on-1 monthly review call</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE RISK-REWARD & CAPITAL GROWTH CALCULATOR -->
+  <section id="calculator" class="py-20 bg-[#081122] border-y border-slate-800/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Interactive Planning Tool</span>
+        <h2 class="text-3xl font-extrabold text-white mt-2">Position Sizing &amp; Risk-Reward Simulator</h2>
+        <p class="text-sm text-slate-400 mt-2">See how disciplined 2% risk management per trade protects your capital while compounding steady returns.</p>
+      </div>
+
+      <div class="glass-card rounded-3xl p-6 sm:p-10 border border-slate-700/80 grid md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-6 space-y-6">
+          <div>
+            <div class="flex justify-between text-sm font-semibold mb-2">
+              <span class="text-slate-300">Your Trading Capital</span>
+              <span id="calcCapitalDisplay" class="text-emerald-400 font-bold">₹1,00,000</span>
+            </div>
+            <input type="range" id="calcCapital" min="10000" max="1000000" step="5000" value="100000" oninput="updateCalculator()" class="w-full accent-emerald-500 cursor-pointer" />
+            <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+              <span>₹10,000</span>
+              <span>₹5,00,000</span>
+              <span>₹10,00,000</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-semibold mb-2">
+              <span class="text-slate-300">Trades Per Week</span>
+              <span id="calcTradesDisplay" class="text-amber-400 font-bold">8 Trades</span>
+            </div>
+            <input type="range" id="calcTrades" min="2" max="20" step="1" value="8" oninput="updateCalculator()" class="w-full accent-amber-400 cursor-pointer" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-semibold mb-2">
+              <span class="text-slate-300">Risk Per Trade (Recommended: 2%)</span>
+              <span id="calcRiskDisplay" class="text-sky-400 font-bold">2%</span>
+            </div>
+            <input type="range" id="calcRisk" min="1" max="5" step="0.5" value="2" oninput="updateCalculator()" class="w-full accent-sky-400 cursor-pointer" />
+          </div>
+        </div>
+
+        <div class="md:col-span-6 bg-slate-950/80 rounded-2xl p-6 border border-slate-800 space-y-4">
+          <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+            <span class="text-xs text-slate-400">Max Stop-Loss Risk / Trade</span>
+            <span id="resMaxLoss" class="text-lg font-extrabold text-rose-400">₹2,000</span>
+          </div>
+          <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+            <span class="text-xs text-slate-400">Target Profit / Winning Trade (1:2.5)</span>
+            <span id="resTargetWin" class="text-lg font-extrabold text-emerald-400">₹5,000</span>
+          </div>
+          <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+            <span class="text-xs text-slate-400">Recommended Plan Tier</span>
+            <span id="resPlanName" class="text-sm font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400">Growth Pro Plan</span>
+          </div>
+          <button onclick="openLeadModal(document.getElementById('resPlanName').innerText)" class="w-full py-3 rounded-xl gold-gradient text-slate-950 font-extrabold text-sm hover:opacity-95 transition">
+            Lock This Strategy &amp; Claim 20% Off →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING PLANS & BETTER OFFERS -->
+  <section id="plans" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="px-3.5 py-1 rounded-full bg-amber-500/15 text-amber-400 text-xs font-bold uppercase tracking-wider">Transparent Pricing • Better Value</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Choose Your Advisory Plan</h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-2">Every plan includes <strong class="text-emerald-400">20% First-Month Welcome Discount</strong> + <strong class="text-amber-400">15-Day Free Extension Shield</strong>. GST Inclusive.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <!-- Plan 1: Starter -->
+        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between border border-slate-800 hover:border-emerald-500/40 transition">
+          <div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Starter</span>
+              <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-0.5 rounded-full">For Freshers</span>
+            </div>
+            <div class="mt-4">
+              <span class="text-xs text-slate-500 line-through">₹14,999</span>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-extrabold text-white">₹11,999</span>
+                <span class="text-xs text-slate-400">/month</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-2">Best for beginners starting with ₹10k–₹35k capital.</p>
+
+            <ul class="mt-6 space-y-2.5 text-xs text-slate-300">
+              <li>✓ 1–2 High-Conviction Alerts Daily</li>
+              <li>✓ Nifty &amp; Bank Nifty Options</li>
+              <li>✓ Complete Beginner Lot-Size Guide</li>
+              <li>✓ Exact Entry, Stop-Loss &amp; Targets</li>
+              <li>✓ Live WhatsApp Market Support</li>
+            </ul>
+          </div>
+
+          <button onclick="openLeadModal('Starter Plan (₹11,999/mo)')" class="mt-7 w-full py-3 rounded-xl bg-slate-800 hover:bg-emerald-600 text-white font-bold text-sm transition">
+            Select Starter Plan
+          </button>
+        </div>
+
+        <!-- Plan 2: Growth Pro (Most Popular) -->
+        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between border-2 border-emerald-500 relative shadow-xl shadow-emerald-500/10">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full emerald-gradient text-white text-[11px] font-extrabold uppercase tracking-wider">
+            Most Popular
+          </div>
+          <div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Growth Pro</span>
+              <span class="text-[11px] bg-emerald-500/15 text-emerald-300 px-2.5 py-0.5 rounded-full">₹35k–₹1.5L Cap</span>
+            </div>
+            <div class="mt-4">
+              <span class="text-xs text-slate-500 line-through">₹29,999</span>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-extrabold text-white">₹23,999</span>
+                <span class="text-xs text-slate-400">/month</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-2">Balanced index options + weekly BTST &amp; expiry trades.</p>
+
+            <ul class="mt-6 space-y-2.5 text-xs text-slate-200">
+              <li>✓ 2–3 Daily Alerts via WhatsApp</li>
+              <li>✓ Nifty / Bank Nifty / Finnifty</li>
+              <li>✓ 2–3 Weekly BTST &amp; Expiry Setups</li>
+              <li>✓ 15-Day Free Extension Shield</li>
+              <li>✓ Dedicated Analyst Call Support</li>
+            </ul>
+          </div>
+
+          <button onclick="openLeadModal('Growth Pro Plan (₹23,999/mo)')" class="mt-7 w-full py-3 rounded-xl emerald-gradient hover:opacity-95 text-white font-extrabold text-sm transition">
+            Select Growth Pro
+          </button>
+        </div>
+
+        <!-- Plan 3: Pro Trader -->
+        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between border border-slate-800 hover:border-amber-500/40 transition">
+          <div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Pro Trader</span>
+              <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-0.5 rounded-full">₹1.5L–₹5L Cap</span>
+            </div>
+            <div class="mt-4">
+              <span class="text-xs text-slate-500 line-through">₹59,999</span>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-extrabold text-white">₹47,999</span>
+                <span class="text-xs text-slate-400">/month</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-2">Multi-segment momentum calls with hero-zero expiry setups.</p>
+
+            <ul class="mt-6 space-y-2.5 text-xs text-slate-300">
+              <li>✓ 3–4 High-Accuracy Calls Daily</li>
+              <li>✓ Index + Stock F&amp;O + Sensex Expiry</li>
+              <li>✓ 4–5 Weekly BTST Jackpot Setups</li>
+              <li>✓ Live Trailing Stop-Loss Alerts</li>
+              <li>✓ Priority Direct Desk Line</li>
+            </ul>
+          </div>
+
+          <button onclick="openLeadModal('Pro Trader Plan (₹47,999/mo)')" class="mt-7 w-full py-3 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-white font-bold text-sm transition">
+            Select Pro Trader
+          </button>
+        </div>
+
+        <!-- Plan 4: Elite HNI Desk -->
+        <div class="glass-card rounded-3xl p-6 flex flex-col justify-between border border-amber-500/40 bg-gradient-to-b from-slate-900 to-[#0B1528]">
+          <div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Elite HNI Desk</span>
+              <span class="text-[11px] bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full">₹5L+ Capital</span>
+            </div>
+            <div class="mt-4">
+              <span class="text-xs text-slate-500 line-through">₹1,25,000</span>
+              <div class="flex items-baseline gap-1">
+                <span class="text-3xl font-extrabold text-white">₹99,999</span>
+                <span class="text-xs text-slate-400">/month</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-2">1-on-1 senior research strategist &amp; hedged portfolio execution.</p>
+
+            <ul class="mt-6 space-y-2.5 text-xs text-slate-200">
+              <li>✓ Personalized Position Sizing &amp; Hedging</li>
+              <li>✓ Index + Stock Options + Positional</li>
+              <li>✓ Direct Senior Analyst Phone Access</li>
+              <li>✓ Complete Existing Portfolio Audit</li>
+              <li>✓ 15-Day Extension + Priority Desk</li>
+            </ul>
+          </div>
+
+          <button onclick="openLeadModal('Elite HNI Desk (₹99,999/mo)')" class="mt-7 w-full py-3 rounded-xl gold-gradient text-slate-950 font-extrabold text-sm hover:opacity-95 transition">
+            Book HNI Consultation
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-20 bg-[#081122] border-y border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Trader Feedback</span>
+        <h2 class="text-3xl font-extrabold text-white mt-2">Trusted by Disciplined Indian Traders</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="text-amber-400 text-sm mb-3">★★★★★</div>
+          <p class="text-sm text-slate-300 leading-relaxed">“I joined as a complete fresher with ₹20,000 capital. Instead of forcing big lots, their team taught me strict stop-loss discipline first. Best decision for my trading.”</p>
+          <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div>
+              <div class="text-sm font-bold text-white">Rahul M.</div>
+              <div class="text-xs text-slate-400">Starter Plan • Mumbai</div>
+            </div>
+            <span class="text-xs text-emerald-400 font-semibold">Verified Client</span>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="text-amber-400 text-sm mb-3">★★★★★</div>
+          <p class="text-sm text-slate-300 leading-relaxed">“What stands out is clarity. Every Nifty and Bank Nifty setup has exact entry and SL levels—no confusion during fast market moves.”</p>
+          <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div>
+              <div class="text-sm font-bold text-white">Amit S.</div>
+              <div class="text-xs text-slate-400">Growth Pro • Pune</div>
+            </div>
+            <span class="text-xs text-emerald-400 font-semibold">Verified Client</span>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="text-amber-400 text-sm mb-3">★★★★★</div>
+          <p class="text-sm text-slate-300 leading-relaxed">“Being a working professional, I cannot watch charts all day. Their BTST and positional stock calls fit my schedule cleanly.”</p>
+          <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div>
+              <div class="text-sm font-bold text-white">Priya K.</div>
+              <div class="text-xs text-slate-400">Pro Trader • Bengaluru</div>
+            </div>
+            <span class="text-xs text-emerald-400 font-semibold">Verified Client</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIRECT CONTACT DESK -->
+  <section id="contact" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-card rounded-3xl p-8 sm:p-12 border border-slate-800 grid lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7 space-y-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Direct Support &amp; Onboarding</span>
+          <h2 class="text-3xl font-extrabold text-white">Have Questions About Capital or Segments?</h2>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed">Connect directly with our research desk via WhatsApp, direct phone call, or email—or submit your profile on our website for a callback within 15 minutes.</p>
+
+          <div class="grid sm:grid-cols-3 gap-4 pt-3">
+            <a href="https://wa.me/918356079521?text=Hello%20Share%20Market%20Analyzer%2C%20I%20need%20help%20choosing%20a%20trading%20plan." target="_blank" rel="noopener" class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 transition">
+              <div class="text-xs text-emerald-400 font-bold uppercase">WhatsApp Desk</div>
+              <div class="text-sm font-bold text-white mt-1">+91 83560 79521</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Instant Chat Support</div>
+            </a>
+
+            <a href="tel:+918356079521" class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/50 transition">
+              <div class="text-xs text-amber-400 font-bold uppercase">Direct Call</div>
+              <div class="text-sm font-bold text-white mt-1">+91 83560 79521</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Mon–Sat, 9 AM – 7 PM</div>
+            </a>
+
+            <a href="mailto:stockmarketanalyser51@gmail.com" class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500/50 transition">
+              <div class="text-xs text-sky-400 font-bold uppercase">Official Email</div>
+              <div class="text-xs font-bold text-white mt-1 break-all">stockmarketanalyser51@gmail.com</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">24/7 Query Desk</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3">
+          <button onclick="openLeadModal('General Advisory Enquiry')" class="w-full py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base transition text-center">
+            Request Callback on Website
+          </button>
+          <a href="https://wa.me/918356079521?text=Hello%20Share%20Market%20Analyzer%2C%20I%20want%20to%20start%20my%202-day%20free%20trial." target="_blank" rel="noopener" class="w-full py-4 px-6 rounded-2xl emerald-gradient hover:opacity-95 text-white font-extrabold text-base transition text-center">
+            Start 2-Day Free Trial on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER & STANDARD RISK DISCLAIMER -->
+  <footer class="bg-[#040914] border-t border-slate-800/80 pt-14 pb-24 sm:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-8 pb-10 border-b border-slate-800/80">
+        <div>
+          <span class="font-heading font-extrabold text-lg text-white">SHARE MARKET <span class="text-emerald-400">ANALYZER</span></span>
+          <p class="text-xs text-slate-400 mt-3 leading-relaxed">Structured technical &amp; derivatives market research focused on strict risk-reward management for Indian retail and HNI traders.</p>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Quick Navigation</h4>
+          <ul class="mt-3 space-y-2 text-xs text-slate-400">
+            <li><a href="#home" class="hover:text-emerald-400">Home</a></li>
+            <li><a href="#why-us" class="hover:text-emerald-400">Why Choose Us</a></li>
+            <li><a href="#services" class="hover:text-emerald-400">Research Services</a></li>
+            <li><a href="#plans" class="hover:text-emerald-400">Pricing Plans</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Contact Details</h4>
+          <ul class="mt-3 space-y-2 text-xs text-slate-400">
+            <li>Phone / WhatsApp: <a href="tel:+918356079521" class="text-emerald-400">+91 83560 79521</a></li>
+            <li>Email: <a href="mailto:stockmarketanalyser51@gmail.com" class="text-emerald-400">stockmarketanalyser51@gmail.com</a></li>
+            <li>Market Hours: Monday – Friday (9:00 AM – 3:30 PM IST)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mandatory Market Risk Disclaimer -->
+      <div class="mt-8 p-4 rounded-xl bg-slate-900/70 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+        <strong class="text-slate-300">Market Risk Disclaimer:</strong> Investment and trading in the securities and derivatives (F&amp;O) market are subject to market risks. Past performance is not a guarantee of future returns. Share Market Analyzer provides educational and research-based market insights; please consult your financial advisor and trade strictly with pre-defined stop-loss and risk management according to your risk appetite.
+      </div>
+
+      <div class="mt-6 text-center text-xs text-slate-500">
+        © 2026 Share Market Analyzer. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://wa.me/918356079521?text=Hello%20Share%20Market%20Analyzer%2C%20I%20have%20a%20query%20about%20your%20services." target="_blank" rel="noopener" aria-label="Chat on WhatsApp" class="fixed bottom-5 right-5 z-40 w-14 h-14 rounded-full emerald-gradient text-white shadow-2xl shadow-emerald-500/40 flex items-center justify-center hover:scale-105 transition">
+    <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+  </a>
+
+  <!-- PACKAGE / LEAD PROFILING MODAL -->
+  <div id="leadModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="glass-card rounded-3xl max-w-md w-full p-6 sm:p-8 border border-emerald-500/40 relative">
+      <button onclick="closeLeadModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center font-bold">✕</button>
+
+      <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Instant Plan Onboarding</span>
+      <h3 class="text-xl font-extrabold text-white mt-1">Complete Your Trader Profile</h3>
+      <p class="text-xs text-slate-400 mt-1">Submit directly to our email desk or send pre-filled details to our WhatsApp.</p>
+
+      <form id="modalLeadForm" action="https://formsubmit.co/stockmarketanalyser51@gmail.com" method="POST" class="mt-5 space-y-3.5">
+        <input type="hidden" name="_subject" value="Plan Booking Enquiry - Share Market Analyzer">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Selected Plan / Interest</label>
+          <input type="text" id="modalPlanInput" name="Selected_Plan" readonly class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-500/40 text-emerald-400 font-bold text-xs" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
+          <input type="text" id="modalName" name="Full_Name" required placeholder="Enter your full name" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-400" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile / WhatsApp Number *</label>
+          <input type="tel" id="modalPhone" name="Phone_Number" required placeholder="+91 XXXXX XXXXX" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-400" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Trading Capital *</label>
+            <select id="modalCapital" name="Trading_Capital" class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-emerald-400">
+              <option value="Below ₹25,000">Below ₹25,000</option>
+              <option value="₹25,000 – ₹1 Lakh" selected>₹25,000 – ₹1 Lakh</option>
+              <option value="₹1 Lakh – ₹5 Lakhs">₹1 Lakh – ₹5 Lakhs</option>
+              <option value="₹5 Lakhs+">₹5 Lakhs+</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Segment / Fresher *</label>
+            <select id="modalSegment" name="Segment_Or_Experience" class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-emerald-400">
+              <option value="Fresher / Beginner">Fresher / Beginner</option>
+              <option value="Nifty & Bank Nifty" selected>Nifty / Bank Nifty</option>
+              <option value="Equity & BTST">Equity &amp; BTST</option>
+              <option value="Stock F&O">Stock F&amp;O</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <button type="submit" class="py-3 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm transition">
+            Submit on Website
+          </button>
+          <button type="button" onclick="sendModalToWhatsApp()" class="py-3 px-3 rounded-xl emerald-gradient hover:opacity-95 text-white font-bold text-xs sm:text-sm transition">
+            Send on WhatsApp
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    function sendSelectedPackage() {
-      const select = document.getElementById("packageSelect");
-      const selectedText = select.value;
-      const message = encodeURIComponent(
-        `Hello Share Market Analyzer, I want to proceed with: ${selectedText}. Please share next steps.`
-      );
-      window.open(`https://wa.me/918356079521?text=${message}`, "_blank", "noopener,noreferrer");
+    const WHATSAPP_NUMBER = "918356079521";
+
+    // Hero Form -> WhatsApp
+    function sendHeroToWhatsApp() {
+      const name = document.getElementById("heroName").value.trim() || "Trader";
+      const phone = document.getElementById("heroPhone").value.trim() || "Not provided";
+      const capital = document.getElementById("heroCapital").value;
+      const segment = document.getElementById("heroSegment").value;
+
+      const msg =
+        `Hello *Share Market Analyzer*,\n` +
+        `I want to get started with your research plans:\n\n` +
+        `• *Name:* ${name}\n` +
+        `• *Mobile:* ${phone}\n` +
+        `• *Available Capital:* ${capital}\n` +
+        `• *Segment / Experience:* ${segment}\n\n` +
+        `Please share the best plan & 2-day trial details.`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
     }
+
+    // Modal Open / Close
+    function openLeadModal(planTitle) {
+      document.getElementById("modalPlanInput").value = planTitle;
+      const modal = document.getElementById("leadModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeLeadModal() {
+      const modal = document.getElementById("leadModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    // Modal Form -> WhatsApp
+    function sendModalToWhatsApp() {
+      const plan = document.getElementById("modalPlanInput").value;
+      const name = document.getElementById("modalName").value.trim() || "Trader";
+      const phone = document.getElementById("modalPhone").value.trim() || "Not provided";
+      const capital = document.getElementById("modalCapital").value;
+      const segment = document.getElementById("modalSegment").value;
+
+      const msg =
+        `Hello *Share Market Analyzer*,\n` +
+        `I am interested in booking a plan:\n\n` +
+        `• *Plan:* ${plan}\n` +
+        `• *Name:* ${name}\n` +
+        `• *Mobile:* ${phone}\n` +
+        `• *Capital:* ${capital}\n` +
+        `• *Segment / Experience:* ${segment}\n\n` +
+        `Please guide me with the next steps.`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+    }
+
+    // Risk-Reward Calculator
+    function updateCalculator() {
+      const capital = parseInt(document.getElementById("calcCapital").value, 10);
+      const trades = parseInt(document.getElementById("calcTrades").value, 10);
+      const riskPct = parseFloat(document.getElementById("calcRisk").value);
+
+      const maxLoss = Math.round(capital * (riskPct / 100));
+      const targetWin = Math.round(maxLoss * 2.5);
+
+      document.getElementById("calcCapitalDisplay").innerText = "₹" + capital.toLocaleString("en-IN");
+      document.getElementById("calcTradesDisplay").innerText = trades + " Trades";
+      document.getElementById("calcRiskDisplay").innerText = riskPct + "%";
+      document.getElementById("resMaxLoss").innerText = "₹" + maxLoss.toLocaleString("en-IN");
+      document.getElementById("resTargetWin").innerText = "₹" + targetWin.toLocaleString("en-IN");
+
+      let recommended = "Starter Plan (₹11,999/mo)";
+      if (capital >= 500000) {
+        recommended = "Elite HNI Desk (₹99,999/mo)";
+      } else if (capital >= 150000) {
+        recommended = "Pro Trader Plan (₹47,999/mo)";
+      } else if (capital >= 35000) {
+        recommended = "Growth Pro Plan (₹23,999/mo)";
+      }
+      document.getElementById("resPlanName").innerText = recommended;
+    }
+
+    updateCalculator();
   </script>
 </body>
 </html>
